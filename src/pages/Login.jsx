@@ -2,43 +2,63 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Debugging line: Log credentials to ensure they're being captured correctly
-    console.log(credentials);
-    // Replace these with your actual credentials validation logic
-    if (credentials.email === 'khan1122@gmail.com' && credentials.password === 'password') {
-      navigate('/dashboard'); // Redirect to the dashboard or admin panel
-    } else {
-      alert('Invalid credentials');
+    
+    // Replace with your API call
+    try {
+      // Simulating an API call
+      if (email && password) {
+        // Navigate to user dashboard or other page after successful login
+        navigate('/dashboard');
+      } else {
+        // Handle error
+        alert('Please enter both email and password.');
+      }
+    } catch (error) {
+      console.error('Login failed', error);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-lg">
-        <h2 className="text-2xl font-bold mb-4">User Login</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          value={credentials.email}
-          onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
-          className="w-full mb-2 p-2 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={credentials.password}
-          onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-          className="w-full mb-2 p-2 border rounded"
-        />
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
-          Login
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="max-w-md w-full bg-white p-8 rounded shadow-md">
+        <h2 className="text-2xl font-bold mb-6">Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-700">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="block text-gray-700">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
